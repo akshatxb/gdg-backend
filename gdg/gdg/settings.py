@@ -27,7 +27,7 @@ SECRET_KEY = "django-insecure-pag&x6(-sz1*4ei7tr=fbzro2je0+(gz3p6n=*x6qjt97(ta)%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [".ngrok-free.app"]
 
 
 # Application definition
@@ -150,7 +150,15 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CORS_ALLOW_ALL_ORIGINS = False  # Set to True for testing, but False for production
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # Allow Next.js frontend in development
-    # "https://yourfrontend.com",  # Add your production frontend URL
+    "https://gdg-frontend-three.vercel.app",  # Add your production frontend URL
 ]
 
-CORS_ALLOW_CREDENTIALS = True  # Allow authentication credentials
+CORS_ALLOW_CREDENTIALS = True  
+
+# Set Secure Cookies (Required for HTTPS)
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+# Allow SameSite=None (Important for cross-site cookies)
+SESSION_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SAMESITE = "None"
