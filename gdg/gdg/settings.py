@@ -1,5 +1,6 @@
 from datetime import timedelta
 import os
+import dj_database_url
 
 """
 Django settings for gdg project.
@@ -27,6 +28,8 @@ SECRET_KEY = "django-insecure-pag&x6(-sz1*4ei7tr=fbzro2je0+(gz3p6n=*x6qjt97(ta)%
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+ALLOWED_HOSTS = ["your-app.onrender.com", "localhost", "127.0.0.1"]
 
 # Application definition
 
@@ -98,12 +101,7 @@ WSGI_APPLICATION = "gdg.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
+DATABASES = {"default": dj_database_url.config(conn_max_age=600, ssl_require=True)}
 
 
 # Password validation
@@ -140,8 +138,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -154,15 +155,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #     ".ngrok-free.app",
 # ]
 
-ALLOWED_HOSTS = [
-    "localhost",
-    "127.0.0.1",
-    "discrete-lion-fairly.ngrok-free.app",  # <-- Add this
-]
-CORS_ALLOWED_ORIGINS = [
-    "https://discrete-lion-fairly.ngrok-free.app",
-    "http://localhost:3000",
-]
+CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True
 
