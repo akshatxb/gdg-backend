@@ -27,9 +27,6 @@ SECRET_KEY = "django-insecure-pag&x6(-sz1*4ei7tr=fbzro2je0+(gz3p6n=*x6qjt97(ta)%
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [".ngrok-free.app"]
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -50,8 +47,9 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "apps.users.authentication.CookieJWTAuthentication",
     ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.AllowAny",),
 }
 
 SIMPLE_JWT = {
@@ -65,9 +63,9 @@ SIMPLE_JWT = {
 }
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
@@ -147,18 +145,22 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-CORS_ALLOW_ALL_ORIGINS = False  # Set to True for testing, but False for production
+# ALLOWED_HOSTS = [
+#     "127.0.0.1",
+#     "localhost",
+#     ".ngrok-free.app",
+# ]
+
+ALLOWED_HOSTS = [
+    "localhost",
+    "127.0.0.1",
+    "discrete-lion-fairly.ngrok-free.app",  # <-- Add this
+]
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Allow Next.js frontend in development
-    "https://gdg-frontend-three.vercel.app",  # Add your production frontend URL
+    "https://discrete-lion-fairly.ngrok-free.app",
+    "http://localhost:3000",
 ]
 
-CORS_ALLOW_CREDENTIALS = True  
+CORS_ALLOW_CREDENTIALS = True
 
-# Set Secure Cookies (Required for HTTPS)
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
-# Allow SameSite=None (Important for cross-site cookies)
-SESSION_COOKIE_SAMESITE = "None"
-CSRF_COOKIE_SAMESITE = "None"
+CORS_ALLOW_METHODS = ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"]
